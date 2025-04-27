@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
 import { HomepageComponent } from './homepage.component';
 import { HomepageRoutingModule } from './homepage-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { EditorComponent } from './editor.component';
 
 @NgModule({
   declarations: [
-    HomepageComponent
+    HomepageComponent,
+    EditorComponent 
   ],
   imports: [
     CommonModule,

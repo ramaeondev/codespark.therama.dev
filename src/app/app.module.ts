@@ -6,6 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { HomepageModule } from './homepage/homepage.module';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -13,9 +15,11 @@ import { HomepageModule } from './homepage/homepage.module';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     CommonModule,
-    HomepageModule  
+    HomepageModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     provideHttpClient()

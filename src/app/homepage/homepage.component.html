@@ -1,69 +1,73 @@
 <div [class.dark]="isDarkMode" class="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
-  
+
   <!-- Sidebar -->
   <aside class="w-16 bg-gray-300 dark:bg-gray-800 flex flex-col items-center py-4 space-y-4">
-    <button *ngFor="let btn of sidebarButtons"
-            class="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded relative group"
-            [disabled]="btn.is_disabled"
-            (click)="changeLanguage(btn)"
-            [attr.title]="btn.title">
-      <i [class]="btn.icon + ' text-2xl'"
-         [ngClass]="{
+    @for(btn of sidebarButtons; track btn.id) {
+    <button class="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded relative group" [disabled]="btn.is_disabled"
+      (click)="changeLanguage(btn)" [attr.title]="btn.title">
+      <i [class]="btn.icon + ' text-2xl'" [ngClass]="{
            'opacity-50 cursor-not-allowed': btn.is_disabled,
            'text-blue-500': !btn.is_disabled
          }"></i>
       <!-- Tooltip on hover -->
-      <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 hidden group-hover:block whitespace-nowrap">
+      <div
+        class="absolute left-16 top-1/2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 hidden group-hover:block whitespace-nowrap">
         {{ btn.title }}
       </div>
     </button>
+    }
   </aside>
 
   <!-- Main Content -->
   <div class="flex-1 flex flex-col">
-    
+
     <!-- Topbar -->
     <header class="bg-gray-200 dark:bg-gray-800 flex items-center justify-between px-4 py-2 shadow">
-  
+
       <!-- Left side: Logo + Name -->
       <div class="flex items-center gap-2">
         <img src="/logo.png" alt="Logo" class="h-8 w-8 mr-2" />
         <span class="font-bold text-xl tracking-wide">CodeSpark</span>
         <span class="text-gray-600 dark:text-gray-400">{{ selectedLanguage?.title }}</span>
       </div>
-    
+
       <!-- Right side: Buttons -->
       <div class="flex items-center gap-2">
-        <button (click)="toggleDarkMode()" class="bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 px-4 py-2 rounded flex items-center justify-center" [attr.aria-label]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
-        <i class="text-xl" [ngClass]="isDarkMode ? 'fa-solid fa-sun text-yellow-400' : 'fa-solid fa-moon text-gray-800'"></i>
+        <button (click)="toggleDarkMode()"
+          class="bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 px-4 py-2 rounded flex items-center justify-center"
+          [attr.aria-label]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+          <i class="text-xl"
+            [ngClass]="isDarkMode ? 'fa-solid fa-sun text-yellow-400' : 'fa-solid fa-moon text-gray-800'"></i>
         </button>
-        <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-bold">Run</button>
+        <button (click)="runCode()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-bold">
+          Run
+        </button>
       </div>
-    
+
     </header>
-    
+
 
     <!-- Editor and Output Panels -->
     <div class="flex flex-1">
-      
-      <!-- Editor -->
-      <div class="flex-1 p-4 border-r border-gray-300 dark:border-gray-700">
-        <h2 class="text-gray-600 dark:text-gray-400 mb-2">Editor</h2>
-        <div class="bg-white dark:bg-gray-800 h-full rounded-lg p-4">
-          <!-- Fake editor space -->
-        </div>
-      </div>
 
-      <!-- Output -->
-      <div class="flex-1 p-4">
-        <h2 class="text-gray-600 dark:text-gray-400 mb-2">Output</h2>
-        <div class="bg-white dark:bg-gray-800 h-full rounded-lg p-4">
-          <!-- Fake output space -->
+      <!-- Editor -->
+      <div class="flex-1 p-4 border-r border-gray-300 dark:border-gray-700 flex flex-row h-full gap-4">
+        <div class="flex-1 flex flex-col">
+          <h2 class="text-gray-600 dark:text-gray-400 mb-2">Editor</h2>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex-1 h-0">
+            <app-editor [language]="selectedLanguage?.language" [value]="code" [errors]="errors"
+              (valueChange)="onCodeChange($event)">
+            </app-editor>
+          </div>
+        </div>
+        <div class="flex-1 flex flex-col">
+          <h2 class="text-gray-600 dark:text-gray-400 mb-2">Output</h2>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex-1 h-0 overflow-auto">
+            <pre class="whitespace-pre-wrap">{{ output }}</pre>
+          </div>
         </div>
       </div>
 
     </div>
 
   </div>
-
-</div>

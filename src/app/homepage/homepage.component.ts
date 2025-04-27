@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ThemeService } from '../services/theme.service';
+import { Subscription } from 'rxjs';
 import { SupportedLanguages } from '../models/languages.model';
 import { ApiService } from '../services/api.service';
+import { CompilationService } from '../services/compilation.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,12 +11,15 @@ import { ApiService } from '../services/api.service';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.scss'],
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   sidebarButtons: SupportedLanguages[] = [];
   isDarkMode = false;
-  selectedLanguage: SupportedLanguages | null = null;
-
-  constructor(private api: ApiService) {}
+  private darkModeSub!: Subscription;
+  selectedLanguage!: SupportedLanguages; 
+  code: string = '';
+  errors: string[] = [];
+  output: string = '';
+  constructor(private api: ApiService, private themeService: ThemeService, private compilationService: CompilationService) { }
 
   ngOnInit(): void {
     this.api.getLanguages().subscribe((data: SupportedLanguages[]) => {
@@ -21,20 +27,33 @@ export class HomepageComponent implements OnInit {
       this.selectedLanguage = this.sidebarButtons.filter(
         (lang: SupportedLanguages) => lang.is_default
       )[0];
-    }); 
+    });
+    this.darkModeSub = this.themeService.darkMode$.subscribe((isDark) => {
+      this.isDarkMode = isDark;
+    });
   }
 
   toggleDarkMode() {
-    this.isDarkMode = !this.isDarkMode;
-    if (this.isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    this.themeService.toggleDarkMode();
   }
 
   changeLanguage(lng: SupportedLanguages) {
     this.selectedLanguage = lng;
+  }
+
+  ngOnDestroy(): void {
+    this.darkModeSub.unsubscribe();
+  }
+  
+  onCodeChange(newCode: string) {
+    this.code = newCode;
+    console.log(this.code); 
+    // Optionally, trigger validation again and update errors
+  }
+  async runCode() {
+    const result = await this.compilationService.compileCode(this.code, this.selectedLanguage);
+    this.output = result.output;
+    console.log(this.output);  // Log the result or handle it as needed
   }
 }
 
