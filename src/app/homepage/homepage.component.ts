@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { SupportedLanguages } from '../models/languages.model';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,24 +9,32 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent implements OnInit {
-  sidebarButtons: any[] = [];
-  darkMode = false;
+  sidebarButtons: SupportedLanguages[] = [];
+  isDarkMode = false;
+  selectedLanguage: SupportedLanguages | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    this.http.get<any[]>('assets/compilers.json').subscribe(data => {
+    this.api.getLanguages().subscribe((data: SupportedLanguages[]) => {
       this.sidebarButtons = data;
-    });
+      this.selectedLanguage = this.sidebarButtons.filter(
+        (lang: SupportedLanguages) => lang.is_default
+      )[0];
+    }); 
   }
 
   toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-    if (this.darkMode) {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
       document.documentElement.classList.add('dark');
     } else {
       document.documentElement.classList.remove('dark');
     }
+  }
+
+  changeLanguage(lng: SupportedLanguages) {
+    this.selectedLanguage = lng;
   }
 }
 

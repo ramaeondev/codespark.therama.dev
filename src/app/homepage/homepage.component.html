@@ -4,12 +4,13 @@
   <aside class="w-16 bg-gray-300 dark:bg-gray-800 flex flex-col items-center py-4 space-y-4">
     <button *ngFor="let btn of sidebarButtons"
             class="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded relative group"
-            [disabled]="btn.isDisabled"
+            [disabled]="btn.is_disabled"
+            (click)="changeLanguage(btn)"
             [attr.title]="btn.title">
       <i [class]="btn.icon + ' text-2xl'"
          [ngClass]="{
-           'opacity-50 cursor-not-allowed': btn.isDisabled,
-           'text-blue-500': !btn.isDisabled
+           'opacity-50 cursor-not-allowed': btn.is_disabled,
+           'text-blue-500': !btn.is_disabled
          }"></i>
       <!-- Tooltip on hover -->
       <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 hidden group-hover:block whitespace-nowrap">
@@ -28,12 +29,13 @@
       <div class="flex items-center gap-2">
         <img src="/logo.png" alt="Logo" class="h-8 w-8 mr-2" />
         <span class="font-bold text-xl tracking-wide">CodeSpark</span>
+        <span class="text-gray-600 dark:text-gray-400">{{ selectedLanguage?.title }}</span>
       </div>
     
       <!-- Right side: Buttons -->
       <div class="flex items-center gap-2">
-        <button (click)="toggleDarkMode()" class="bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 px-4 py-2 rounded">
-          {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+        <button (click)="toggleDarkMode()" class="bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 px-4 py-2 rounded flex items-center justify-center" [attr.aria-label]="isDarkMode ? 'Light Mode' : 'Dark Mode'">
+        <i class="text-xl" [ngClass]="isDarkMode ? 'fa-solid fa-sun text-yellow-400' : 'fa-solid fa-moon text-gray-800'"></i>
         </button>
         <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-bold">Run</button>
       </div>

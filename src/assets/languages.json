@@ -1,88 +1,102 @@
-
-
-  [
+{
+  "sideBarOptions": [
+    {
+      "language": "javascript",
+      "title": "Online JavaScript Compiler (Editor)",
+      "icon": "fa-brands fa-js",
+      "isDisabled": false,
+      "isDefault": true 
+    },
     {
       "language": "python",
       "title": "Online Python Compiler",
       "icon": "fa-brands fa-python",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "r",
       "title": "Online R Compiler",
-      "icon": "fa-solid fa-r-project", 
-      "isDisabled": true
+      "icon": "fa-solid fa-r-project",
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "sql",
       "title": "Online SQL Editor",
       "icon": "fa-solid fa-database",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "html",
       "title": "Online HTML/CSS Editor",
       "icon": "fa-brands fa-html5",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "java",
       "title": "Online Java Compiler",
       "icon": "fa-brands fa-java",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "c",
       "title": "Online C Compiler",
       "icon": "fa-solid fa-c",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "cpp",
       "title": "Online C++ Compiler",
       "icon": "fa-solid fa-cuttlefish",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "csharp",
       "title": "Online C# Compiler",
       "icon": "fa-solid fa-hashtag",
-      "isDisabled": true
-    },
-    {
-      "language": "javascript",
-      "title": "Online JavaScript Compiler (Editor)",
-      "icon": "fa-brands fa-js",
-      "isDisabled": false
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "typescript",
       "title": "Online Typescript Compiler (Editor)",
       "icon": "fa-brands fa-js",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "golang",
       "title": "Online Golang Compiler",
-      "icon": "fa-solid fa-golang", 
-      "isDisabled": true
+      "icon": "fa-solid fa-golang",
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "php",
       "title": "Online PHP Compiler",
       "icon": "fa-brands fa-php",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "swift",
       "title": "Online Swift Compiler",
       "icon": "fa-brands fa-swift",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     },
     {
       "language": "rust",
       "title": "Online Rust Compiler",
       "icon": "fa-brands fa-rust",
-      "isDisabled": true
+      "isDisabled": true,
+      "isDefault": false
     }
   ]
+}
