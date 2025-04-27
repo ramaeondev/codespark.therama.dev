@@ -1,0 +1,25 @@
+<header class="app-header">
+  <img src="/assets/monaco/../../logo.png" alt="CodeSpark Logo" class="app-logo" />
+  <span class="app-title">CodeSpark</span>
+  <span class="spacer"></span>
+  <div class="header-controls">
+    <app-language-selector (languageChanged)="onLanguageChanged($event)"></app-language-selector>
+    <app-run-button [code]="code" [language]="language" (outputGenerated)="onOutput($event)"></app-run-button>
+  </div>
+</header>
+<div class="editor-result-row">
+  <div class="editor-half">
+    <h2 class="section-title">Code Editor</h2>
+    <app-code-editor [code]="code" [language]="language" (codeChange)="onCodeChanged($event)"></app-code-editor>
+  </div>
+  <div class="result-console-half">
+    <div class="result-section">
+      <h2 class="section-title">Output</h2>
+      <app-result [output]="programOutput" [language]="language"></app-result>
+    </div>
+    <div class="console-section">
+      <h2 class="section-title">Console Logs</h2>
+      <app-console [consoleLogs]="consoleLogs" [language]="language"></app-console>
+    </div>
+  </div>
+</div>
