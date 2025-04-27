@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { SupportedLanguages } from '../models/languages.model';
 import { ApiService } from '../services/api.service';
 import { CompilationService } from '../services/compilation.service';
+import { BabelTranspilerService } from '../services/babel-transpiler.service';
 
 @Component({
   selector: 'app-homepage',
@@ -15,18 +16,18 @@ export class HomepageComponent implements OnInit, OnDestroy {
   sidebarButtons: SupportedLanguages[] = [];
   isDarkMode = false;
   private darkModeSub!: Subscription;
-  selectedLanguage!: SupportedLanguages; 
+  selectedLanguage!: SupportedLanguages;
   code: string = '';
   errors: string[] = [];
   output: string = '';
-  constructor(private api: ApiService, private themeService: ThemeService, private compilationService: CompilationService) { }
+  constructor(private api: ApiService, private themeService: ThemeService, private babelService: BabelTranspilerService) { }
 
   ngOnInit(): void {
     this.api.getLanguages().subscribe((data: SupportedLanguages[]) => {
       this.sidebarButtons = data;
-      this.selectedLanguage = this.sidebarButtons.filter(
+      this.selectedLanguage = this.sidebarButtons.find(
         (lang: SupportedLanguages) => lang.is_default
-      )[0];
+      )!;
     });
     this.darkModeSub = this.themeService.darkMode$.subscribe((isDark) => {
       this.isDarkMode = isDark;
@@ -44,16 +45,18 @@ export class HomepageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.darkModeSub.unsubscribe();
   }
-  
+
   onCodeChange(newCode: string) {
     this.code = newCode;
-    console.log(this.code); 
-    // Optionally, trigger validation again and update errors
   }
-  async runCode() {
-    const result = await this.compilationService.compileCode(this.code, this.selectedLanguage);
-    this.output = result.output;
-    console.log(this.output);  // Log the result or handle it as needed
+
+ async runCode() {
+    try {
+      this.output = await this.babelService.transpileAndExecuteCode(this.code);
+    } catch (error: unknown) {
+      console.error('Error:', error);
+      this.output = `Error: ${error instanceof Error ? error.message : String(error)}`;
+    }
   }
 }
 

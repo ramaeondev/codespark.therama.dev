@@ -26,43 +26,38 @@ const languageCompilationTimes: Record<string, number> = {
 const mockOutputs: Record<string, (code: string) => CompilationResult> = {
   javascript: (code) => {
     try {
-        if (code.includes('console.log')) {
-          const output = code.match(/console\.log\((.*)\)/)?.[1] || '';
-          
-          // Evaluate the expression inside console.log and output the result
-          let evaluatedOutput;
-          try {
-            evaluatedOutput = eval(output); // Use eval to execute the expression
-          } catch (e) {
-            if (e instanceof Error) {
-                evaluatedOutput = `Error evaluating expression: ${e.message}`;
-              } else {
-                evaluatedOutput = 'Error evaluating expression: Unknown error';
-              }
-            }
-  
-          return {
-            success: true,
-            output: `${evaluatedOutput}\n`,  // Output the result of the evaluated expression
-            errors: [],
-            executionTime: 10,
-          };
+      let sanitizedCode = code.trim();
+      sanitizedCode = sanitizedCode.replace(/var|let|const/g, "");
+      let evaluatedOutput;
+
+      // Simulate evaluating the code with the current scope
+      try {
+        // Create a function that can run the code within its own scope
+        const fn = new Function('console', 'return (' + code + ')');
+        evaluatedOutput = fn(console); // Run the code using the console context
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          evaluatedOutput = `Error evaluating expression: ${e.message}`;
+        } else {
+          evaluatedOutput = 'Error evaluating expression: Unknown error';
         }
-        return {
-          success: true,
-          output: "Code executed successfully, but no console output detected.\n",
-          errors: [],
-          executionTime: 5,
-        };
-      } catch (error) {
-        return {
-          success: false,
-          output: '',
-          errors: [`Error: ${error instanceof Error ? error.message : String(error)}`],
-          executionTime: 2,
-        };
       }
-    },
+
+      return {
+        success: true,
+        output: `${evaluatedOutput}\n`,
+        errors: [],
+        executionTime: 10,
+      };
+    } catch (error) {
+      return {
+        success: false,
+        output: '',
+        errors: [`Error: ${error instanceof Error ? error.message : String(error)}`],
+        executionTime: 2,
+      };
+    }
+  },
   typescript: (code) => {
     if (code.includes('console.log')) {
       return {
