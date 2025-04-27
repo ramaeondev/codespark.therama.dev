@@ -1,59 +1,111 @@
-# CompilerTheramaDev
+🛠️ Online JS & Python Code Runner
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
+This project is a full-stack online code editor and compiler for JavaScript, TypeScript, and Python.
 
-## Development server
+It allows users to:
 
-To start a local development server, run:
+Write code in a web editor.
+Execute JavaScript and Python securely.
+View program Output and Console Logs separately.
+See live linting for JavaScript and TypeScript (Monaco Editor).
+✨ Tech Stack
 
-```bash
-ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Layer	Technology
+Frontend	Angular 17 + Monaco Editor
+Backend	FastAPI (Python 3.11)
+Containerization	Docker
+Future	Supabase (for user code storage, authentication, etc.)
+🖼️ Application Layout
 
-## Code scaffolding
+Code Editor (Monaco)
+Run Button
+Language Selector (JS / Python)
+Output Area:
+Top half: Program Output
+Bottom half: Console Logs
+🏗️ Project Structure
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+frontend/    --> Angular app
+  └── src/
+      └── app/
+          ├── components/
+          │    ├── code-editor/
+          │    ├── run-button/
+          │    ├── language-selector/
+          │    └── result/
+          └── services/
+              └── code-execution.service.ts
 
-```bash
-ng generate component component-name
-```
+backend/     --> FastAPI server (Python)
+  └── main.py
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+docker-compose.yml --> To run backend with Docker
+README.md
+⚡ Local Development Setup
 
-```bash
-ng generate --help
-```
+1. Clone the repo
+git clone https://github.com/yourusername/online-js-python-runner.git
+cd online-js-python-runner
+2. Start the Backend (Python FastAPI + Docker)
+cd backend
+docker build -t code-runner-backend .
+docker run -p 8000:8000 code-runner-backend
+or using docker-compose:
 
-## Building
+docker-compose up --build
+The backend will start at:
 
-To build the project run:
+http://localhost:8000
+3. Start the Frontend (Angular)
+cd frontend
+npm install
+npm start
+The frontend will start at:
 
-```bash
-ng build
-```
+http://localhost:4200
+🚀 Deployment
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Backend Deployment Options
+Fly.io
+Render.com
+AWS EC2 (Docker)
+The backend must be exposed publicly so the Angular app can access /run-python API.
 
-## Running unit tests
+Frontend Deployment Options
+GitHub Pages
+Vercel
+AWS S3 + CloudFront
+Netlify
+🛡️ Security Considerations
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Python code execution is sandboxed inside Docker with timeout (5s max).
+JavaScript code runs in-browser (user side only).
+Future improvements: memory limits, CPU limits, syscall restrictions (gVisor / Firecracker).
+📋 TODO / Roadmap
 
-```bash
-ng test
-```
+ Split Output page horizontally
+ Support JS + Python code execution
+ Capture console logs separately
+ Add TypeScript linting (live)
+ Save user code to Supabase
+ Add support for C++ and Java
+ Deploy backend using Fly.io
+ Add authentication (optional)
+ Add code sharing (copy link feature)
+👨‍💻 Author
 
-## Running end-to-end tests
+GitHub: @ramaeon
+Twitter: @ramaeon
+📸 Preview Screenshot
 
-For end-to-end (e2e) testing, run:
+(Insert a nice screenshot of the split output view here!)
 
-```bash
-ng e2e
-```
+License
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+This project is licensed under the MIT License — feel free to use, modify, and share.
 
-## Additional Resources
+✨ Final Note
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Built for developers, students, and creators.
+Run your code, learn new languages, and explore programming from your browser 🚀
