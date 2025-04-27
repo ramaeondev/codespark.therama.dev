@@ -1,0 +1,88 @@
+
+
+  [
+    {
+      "language": "python",
+      "title": "Online Python Compiler",
+      "icon": "fa-brands fa-python",
+      "isDisabled": true
+    },
+    {
+      "language": "r",
+      "title": "Online R Compiler",
+      "icon": "fa-solid fa-r-project", 
+      "isDisabled": true
+    },
+    {
+      "language": "sql",
+      "title": "Online SQL Editor",
+      "icon": "fa-solid fa-database",
+      "isDisabled": true
+    },
+    {
+      "language": "html",
+      "title": "Online HTML/CSS Editor",
+      "icon": "fa-brands fa-html5",
+      "isDisabled": true
+    },
+    {
+      "language": "java",
+      "title": "Online Java Compiler",
+      "icon": "fa-brands fa-java",
+      "isDisabled": true
+    },
+    {
+      "language": "c",
+      "title": "Online C Compiler",
+      "icon": "fa-solid fa-c",
+      "isDisabled": true
+    },
+    {
+      "language": "cpp",
+      "title": "Online C++ Compiler",
+      "icon": "fa-solid fa-cuttlefish",
+      "isDisabled": true
+    },
+    {
+      "language": "csharp",
+      "title": "Online C# Compiler",
+      "icon": "fa-solid fa-hashtag",
+      "isDisabled": true
+    },
+    {
+      "language": "javascript",
+      "title": "Online JavaScript Compiler (Editor)",
+      "icon": "fa-brands fa-js",
+      "isDisabled": false
+    },
+    {
+      "language": "typescript",
+      "title": "Online Typescript Compiler (Editor)",
+      "icon": "fa-brands fa-js",
+      "isDisabled": true
+    },
+    {
+      "language": "golang",
+      "title": "Online Golang Compiler",
+      "icon": "fa-solid fa-golang", 
+      "isDisabled": true
+    },
+    {
+      "language": "php",
+      "title": "Online PHP Compiler",
+      "icon": "fa-brands fa-php",
+      "isDisabled": true
+    },
+    {
+      "language": "swift",
+      "title": "Online Swift Compiler",
+      "icon": "fa-brands fa-swift",
+      "isDisabled": true
+    },
+    {
+      "language": "rust",
+      "title": "Online Rust Compiler",
+      "icon": "fa-brands fa-rust",
+      "isDisabled": true
+    }
+  ]

@@ -1,28 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-homepage',
   standalone: false,
   templateUrl: './homepage.component.html',
-  styleUrl: './homepage.component.scss',
+  styleUrls: ['./homepage.component.scss'],
 })
-export class HomepageComponent {
-  code: string = '';
-  language: string = 'javascript';
-  programOutput: string = '';
-  consoleLogs: string = '';
+export class HomepageComponent implements OnInit {
+  sidebarButtons: any[] = [];
+  darkMode = false;
 
-  onLanguageChanged(lang: string) {
-    this.language = lang;
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http.get<any[]>('assets/compilers.json').subscribe(data => {
+      this.sidebarButtons = data;
+    });
   }
 
-  onCodeChanged(newCode: string) {
-    this.code = newCode;
-  }
-
-  onOutput(output: string) {
-    this.programOutput = output;
-    // Optionally set this.consoleLogs if needed
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+    if (this.darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }
 }
 

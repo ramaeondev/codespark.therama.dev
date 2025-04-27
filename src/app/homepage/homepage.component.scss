@@ -1,24 +1,36 @@
-body, html {
+html {
+  height: 100%;
+  width: 100vw;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+body {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
-  min-height: 100vh;
   font-family: 'Inter', Arial, Helvetica, sans-serif;
-  background: #fff;
+  background: #f4f6fa;
   color: #23272e;
   box-sizing: border-box;
+  overflow: hidden;
+  overscroll-behavior: none;
 }
+* {
+  box-sizing: border-box;
+}
+
 
 .app-header {
   display: flex;
   align-items: center;
   background: #23272e;
   color: #00bfae;
-  padding: 0.5rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1.5rem;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  border-bottom: 2px solid #00bfae22;
 }
 
 .header-controls {
@@ -36,44 +48,67 @@ body, html {
 .editor-result-row {
   display: flex;
   flex-direction: row;
-  gap: 2rem;
+  gap: 0;
   width: 100vw;
   height: calc(100vh - 64px);
   min-height: 0;
   align-items: stretch;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #f4f6fa;
+  overflow: hidden;
 }
 
 .editor-half {
+  flex: 3 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #23272e;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.result-console-half {
   flex: 2 1 0;
   min-width: 0;
   display: flex;
   flex-direction: column;
+  gap: 0;
   height: 100%;
-}
+  margin: 0;
+  overflow: hidden;
+} 
 
-.result-console-half {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  height: 100%;
-}
 
 .result-section, .console-section {
   flex: 1 1 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
+  background: #23272e;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .section-title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem 0;
-  color: #23272e;
-  letter-spacing: 0.5px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 0.75rem 0;
+  color: #00bfae;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 app-code-editor, app-result, app-console {
@@ -81,6 +116,10 @@ app-code-editor, app-result, app-console {
   min-height: 0;
   min-width: 0;
   display: flex;
+  border-radius: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 ngx-monaco-editor {
@@ -89,8 +128,9 @@ ngx-monaco-editor {
   min-width: 0;
   width: 100% !important;
   height: 100% !important;
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
 }
 
 .app-header app-language-selector,
@@ -98,12 +138,33 @@ ngx-monaco-editor {
 .app-header mat-form-field {
   margin: 0 0.6rem 0 0;
   min-width: 90px;
-  max-width: 120px;
+  @media (max-width: 900px) {
+    .editor-result-row {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem;
+      height: auto;
+    }
+    .editor-half, .result-console-half {
+      margin: 0;
+      padding: 0.75rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .result-console-half {
+      flex-direction: row;
+      gap: 1rem;
+      height: 350px;
+    }
+    .result-section, .console-section {
+      margin-bottom: 0;
+      padding: 0.75rem;
+      border-radius: 10px;
+    }
+  }
   background: transparent;
   margin-top: 0;
 }
-
-
 
 .app-header mat-form-field {
   margin-bottom: 0;
@@ -145,8 +206,8 @@ ngx-monaco-editor {
 
 
 .app-logo {
-  height: 48px;
-  width: 48px;
+  height: 44px;
+  width: 44px;
   margin-right: 1.2rem;
   border-radius: 8px;
   background: #fff;
@@ -159,4 +220,5 @@ ngx-monaco-editor {
   color: #00adb5;
   letter-spacing: 1.5px;
   font-family: 'Fira Sans', 'Segoe UI', Arial, sans-serif;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }

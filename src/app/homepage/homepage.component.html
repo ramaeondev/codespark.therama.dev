@@ -1,25 +1,67 @@
-<header class="app-header">
-  <img src="/assets/monaco/../../logo.png" alt="CodeSpark Logo" class="app-logo" />
-  <span class="app-title">CodeSpark</span>
-  <span class="spacer"></span>
-  <div class="header-controls">
-    <app-language-selector (languageChanged)="onLanguageChanged($event)"></app-language-selector>
-    <app-run-button [code]="code" [language]="language" (outputGenerated)="onOutput($event)"></app-run-button>
-  </div>
-</header>
-<div class="editor-result-row">
-  <div class="editor-half">
-    <h2 class="section-title">Code Editor</h2>
-    <app-code-editor [code]="code" [language]="language" (codeChange)="onCodeChanged($event)"></app-code-editor>
-  </div>
-  <div class="result-console-half">
-    <div class="result-section">
-      <h2 class="section-title">Output</h2>
-      <app-result [output]="programOutput" [language]="language"></app-result>
+<div [class.dark]="isDarkMode" class="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+  
+  <!-- Sidebar -->
+  <aside class="w-16 bg-gray-300 dark:bg-gray-800 flex flex-col items-center py-4 space-y-4">
+    <button *ngFor="let btn of sidebarButtons"
+            class="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded relative group"
+            [disabled]="btn.isDisabled"
+            [attr.title]="btn.title">
+      <i [class]="btn.icon + ' text-2xl'"
+         [ngClass]="{
+           'opacity-50 cursor-not-allowed': btn.isDisabled,
+           'text-blue-500': !btn.isDisabled
+         }"></i>
+      <!-- Tooltip on hover -->
+      <div class="absolute left-16 top-1/2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded px-2 py-1 hidden group-hover:block whitespace-nowrap">
+        {{ btn.title }}
+      </div>
+    </button>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    
+    <!-- Topbar -->
+    <header class="bg-gray-200 dark:bg-gray-800 flex items-center justify-between px-4 py-2 shadow">
+  
+      <!-- Left side: Logo + Name -->
+      <div class="flex items-center gap-2">
+        <img src="/logo.png" alt="Logo" class="h-8 w-8 mr-2" />
+        <span class="font-bold text-xl tracking-wide">CodeSpark</span>
+      </div>
+    
+      <!-- Right side: Buttons -->
+      <div class="flex items-center gap-2">
+        <button (click)="toggleDarkMode()" class="bg-gray-400 dark:bg-gray-700 hover:bg-gray-500 dark:hover:bg-gray-600 px-4 py-2 rounded">
+          {{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}
+        </button>
+        <button class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-bold">Run</button>
+      </div>
+    
+    </header>
+    
+
+    <!-- Editor and Output Panels -->
+    <div class="flex flex-1">
+      
+      <!-- Editor -->
+      <div class="flex-1 p-4 border-r border-gray-300 dark:border-gray-700">
+        <h2 class="text-gray-600 dark:text-gray-400 mb-2">Editor</h2>
+        <div class="bg-white dark:bg-gray-800 h-full rounded-lg p-4">
+          <!-- Fake editor space -->
+        </div>
+      </div>
+
+      <!-- Output -->
+      <div class="flex-1 p-4">
+        <h2 class="text-gray-600 dark:text-gray-400 mb-2">Output</h2>
+        <div class="bg-white dark:bg-gray-800 h-full rounded-lg p-4">
+          <!-- Fake output space -->
+        </div>
+      </div>
+
     </div>
-    <div class="console-section">
-      <h2 class="section-title">Console Logs</h2>
-      <app-console [consoleLogs]="consoleLogs" [language]="language"></app-console>
-    </div>
+
   </div>
+
 </div>
