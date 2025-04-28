@@ -30,16 +30,19 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GLOBAL }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GLOBAL }}
           aws-region: ${{ secrets.AWS_REGION }}
-          source-dir: ./dist
-          destination-bucket: ${{ secrets.AWS_S3_BUCKET }}
+          source-dir: ./dist`
+          destination-bucket: ${{ secrets.S3_BUCKET }}
           delete-removed: true
 
-      - name: Invalidate CloudFront cache (optional)
-        if: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID != '' }}
-        uses: awact/cloudfront-action@v2
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }} \
+            --paths "/*"
+
+      - name: Log and Update Deployment
+        if: always()
+        uses: ramaeondev/therama.dev/.github/actions/log-and-update-deployment@master
         with:
-          distribution-id: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
-          paths: '/*'
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GLOBAL }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GLOBAL }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          start_time: ${{ env.START_TIME }}
+          s3_bucket: ${{ secrets.S3_UPLOAD_BUCKET }}
