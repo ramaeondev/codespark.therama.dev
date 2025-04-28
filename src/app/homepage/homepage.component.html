@@ -1,7 +1,7 @@
-<div [class.dark]="isDarkMode" class="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
+<div [class.dark]="isDarkMode" class="flex flex-col md:flex-row min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
 
   <!-- Sidebar -->
-  <aside class="w-16 bg-gray-300 dark:bg-gray-800 flex flex-col items-center py-4 space-y-4">
+  <aside class="w-full md:w-16 bg-gray-300 dark:bg-gray-800 flex md:flex-col flex-row items-center py-2 md:py-4 space-y-0 md:space-y-4 space-x-4 md:space-x-0 justify-center md:justify-start">
     @for(btn of sidebarButtons; track btn.id) {
     <button class="hover:bg-gray-200 dark:hover:bg-gray-700 p-2 rounded relative group" [disabled]="btn.is_disabled"
       (click)="changeLanguage(btn)" [attr.title]="btn.title">
@@ -22,13 +22,13 @@
   <div class="flex-1 flex flex-col">
 
     <!-- Topbar -->
-    <header class="bg-gray-200 dark:bg-gray-800 flex items-center justify-between px-4 py-2 shadow">
+    <header class="bg-gray-200 dark:bg-gray-800 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-4 py-2 shadow gap-2">
 
       <!-- Left side: Logo + Name -->
       <div class="flex items-center gap-2">
         <img src="/logo.png" alt="Logo" class="h-8 w-8 mr-2" />
         <span class="font-bold text-xl tracking-wide">CodeSpark</span>
-        <span class="text-gray-600 dark:text-gray-400">{{ selectedLanguage?.title }}</span>
+        <span class="text-gray-600 dark:text-gray-400">{{ selectedLanguage.title }}</span>
       </div>
 
       <!-- Right side: Buttons -->
@@ -39,30 +39,33 @@
           <i class="text-xl"
             [ngClass]="isDarkMode ? 'fa-solid fa-sun text-yellow-400' : 'fa-solid fa-moon text-gray-800'"></i>
         </button>
-        <button (click)="runCode()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded text-white font-bold">
-          Run
-        </button>
+       
       </div>
 
     </header>
 
 
     <!-- Editor and Output Panels -->
-    <div class="flex flex-1">
+    <div class="flex flex-col lg:flex-row flex-1 w-full">
 
       <!-- Editor -->
-      <div class="flex-1 p-4 border-r border-gray-300 dark:border-gray-700 flex flex-row h-full gap-4">
+      <div class="flex-1 p-2 sm:p-4 border-b lg:border-b-0 lg:border-r border-gray-300 dark:border-gray-700 flex flex-col lg:flex-row h-full gap-2 sm:gap-4">
         <div class="flex-1 flex flex-col">
-          <h2 class="text-gray-600 dark:text-gray-400 mb-2">Editor</h2>
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex-1 h-0">
-            <app-editor [language]="selectedLanguage?.language" [value]="code" [errors]="errors"
+          <h2 class="text-gray-600 dark:text-gray-400 mb-2 flex items-center justify-between">
+            Editor
+            <button (click)="runCode()" class="bg-blue-600 hover:bg-blue-700 px-4  rounded text-white font-bold">
+              Run
+            </button>
+          </h2>
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-2 sm:p-4 flex-1 h-0 min-h-[200px]">
+            <app-editor [language]="selectedLanguage" [value]="code" [errors]="errors"
               (valueChange)="onCodeChange($event)">
             </app-editor>
           </div>
         </div>
         <div class="flex-1 flex flex-col">
           <h2 class="text-gray-600 dark:text-gray-400 mb-2">Output</h2>
-          <div class="bg-white dark:bg-gray-800 rounded-lg p-4 flex-1 h-0 overflow-auto">
+          <div class="bg-white dark:bg-gray-800 rounded-lg p-2 sm:p-4 flex-1 h-0 min-h-[120px] overflow-auto">
             <pre class="whitespace-pre-wrap">{{ output }}</pre>
             <pre class="whitespace-pre-wrap">{{ errors }}</pre>
 

@@ -6,7 +6,7 @@ import { SupportedLanguages } from '../models/languages.model';
 
 @Component({
   selector: 'app-editor',
-  template: `<div #editorContainer class="h-full w-full rounded-md overflow-hidden border"></div>`,
+  template: `<div #editorContainer class="h-full w-full min-h-[150px] rounded-md overflow-hidden border p-2 sm:p-4 bg-white dark:bg-gray-800"></div>`, 
   standalone: false
 })
 export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
@@ -61,8 +61,8 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
       };  
       this.editorInstance = monaco.editor.create(this.editorContainer.nativeElement, {
         value: this.value,
-        language: this.language?.language, 
-        theme: this.isDarkMode ? 'vs-dark' : 'light',
+        language: this.language?.language,
+        theme: this.isDarkMode ? 'vs-dark' : 'vs',
         automaticLayout: true,
         minimap: { enabled: true },
         scrollBeyondLastLine: false,
@@ -75,13 +75,24 @@ export class EditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChan
         glyphMargin: true,
         folding: true,
         rulers: [],
-        wordWrap: 'off',
+        wordWrap: 'on', // Modern vs Code default: Wrap words
         quickSuggestions: true,
         acceptSuggestionOnCommitCharacter: true,
         acceptSuggestionOnEnter: 'on',
         accessibilitySupport: 'auto',
+        formatOnType: true, // Auto-format as you type
+        tabSize: 2, // VS Code default
+        insertSpaces: true, // Use spaces instead of tabs (VS Code default)
+        detectIndentation: true, // Automatically detect indentation style
+        autoIndent: 'full', // Full auto-indentation for better alignment
+        smoothScrolling: true, // Enable smooth scrolling
+        suggestOnTriggerCharacters: true, // Enable IntelliSense
+        renderControlCharacters: true, // Render control characters
+        suggest: {
+          filterGraceful: true, // Improve suggestion filtering
+        },
+        parameterHints: { enabled: true }, // Show parameter hints when typing function calls
       });
-
       // Listen for changes
       this.contentChangeSubscription = this.editorInstance.onDidChangeModelContent(() => {
         this.valueChange.emit(this.editorInstance?.getValue() ?? '');
