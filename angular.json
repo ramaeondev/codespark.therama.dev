@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "compiler.therama.dev": {
+    "codespark.therama.dev": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -22,11 +22,14 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
-            "outputPath": "dist/compiler.therama.dev",
+            "customWebpackConfig": {
+    "path": "./webpack.config.js"
+  },
+            "outputPath": "dist/codespark.therama.dev",
             "index": "src/index.html",
-            "browser": "src/main.ts",
+            "main": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -79,13 +82,13 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "compiler.therama.dev:build:production"
+              "buildTarget": "codespark.therama.dev:build:production"
             },
             "development": {
-              "buildTarget": "compiler.therama.dev:build:development"
+              "buildTarget": "codespark.therama.dev:build:development"
             }
           },
           "defaultConfiguration": "development"
