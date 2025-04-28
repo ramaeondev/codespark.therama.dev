@@ -24,15 +24,15 @@ jobs:
       - name: Build Angular app
         run: npm run build -- --configuration=production
 
-      - name: Upload to S3
-        uses: aws-actions/s3-sync@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_GLOBAL }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_GLOBAL }}
           aws-region: ${{ secrets.AWS_REGION }}
-          source-dir: ./dist`
-          destination-bucket: ${{ secrets.S3_BUCKET }}
-          delete-removed: true
+          
+      - name: Deploy to S3
+        run: aws s3 sync ./dist s3://${{ secrets.S3_BUCKET }} --delete
 
       - name: Invalidate CloudFront cache
         run: |
